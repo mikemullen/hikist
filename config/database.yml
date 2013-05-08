@@ -24,7 +24,7 @@ test:
   database: hikist_test
   pool: 5
   host: localhost
-  username: mike
+  username: 
   password: future
 
 #production:
