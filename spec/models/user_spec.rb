@@ -2,11 +2,14 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  email           :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 require 'spec_helper'
@@ -39,6 +42,14 @@ describe User do
     end
 
     it { should be_admin }
+  end
+
+  describe "access to admin" do
+    it "should not allow access to admin" do
+      expect do
+        User.new(admin: true)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
   end
 
   describe "when name is not present" do
