@@ -31,6 +31,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:hikelogs) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -142,5 +143,29 @@ describe User do
   	  it { should_not == user_for_invalid_password }
   	  specify { user_for_invalid_password.should be_false }
   	end
+  end
+
+  describe "micropost associations" do
+
+    before { @user.save }
+    let!(:older_hikelog) do
+      FactoryGirl.create(:hikelog, user: @user, date_of_hike: 1.week.ago)
+    end
+    let!(:newer_hikelog) do
+      FactoryGirl.create(:hikelog, user: @user, date_of_hike: 1.day.ago)
+    end
+
+    it "should have the correct hikelogs in the correct order" do
+      @user.hikelogs.should == [newer_hikelog, older_hikelog]
+    end
+
+    it "should destroy associated hikelogs" do
+      hikelogs = @user.hikelogs.dup
+      @user.destroy
+      hikelogs.should_not be_empty
+      hikelogs.each do |hikelog|
+        Hikelog.find_by_id(hikelog.id).should be_nil
+      end
+    end
   end
 end

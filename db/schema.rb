@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510041044) do
+ActiveRecord::Schema.define(:version => 20130516183000) do
+
+  create_table "hikelogs", :force => true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "location"
+    t.date     "date_of_hike"
+    t.decimal  "length_of_hike"
+    t.integer  "elevation_change"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "hikelogs", ["user_id"], :name => "index_hikelogs_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
