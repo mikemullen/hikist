@@ -32,6 +32,7 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:hikelogs) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -166,6 +167,16 @@ describe User do
       hikelogs.each do |hikelog|
         Hikelog.find_by_id(hikelog.id).should be_nil
       end
+    end
+
+    describe "status" do
+      let(:unfollowed_hike) do
+        FactoryGirl.create(:hikelog, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_hikelog) }
+      its(:feed) { should include(older_hikelog) }
+      its(:feed) { should_not include(unfollowed_hike) }
     end
   end
 end

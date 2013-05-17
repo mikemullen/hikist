@@ -7,6 +7,7 @@ class HikelogsController < ApplicationController
   	  flash[:success] = "Hike added!"
   	  redirect_to root_url
   	else
+      @feed_itmes = []
   	  render 'static_pages/home'
   	end
   end
