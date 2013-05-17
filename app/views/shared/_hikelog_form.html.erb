@@ -1,0 +1,22 @@
+<%= form_for(@hikelog) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+  	<%= f.text_area :title, placeholder: "Hike title" %>
+  </div>
+  <div class="field">
+  	<%= f.text_area :content, placeholder: "Enter hike report" %>
+  </div>
+  <div class="field">
+  	<%= f.text_area :location, placeholder: "Hike location" %>
+  </div>
+  <div class="field">
+  	<%= f.text_area :date_of_hike, placeholder: "yyyy-mm-dd" %>
+  </div>
+  <div class="field">
+  	<%= f.text_area :length_of_hike, placeholder: "Hike distance in miles" %>
+  </div>
+  <div class="field">
+  	<%= f.text_area :elevation_change, placeholder: "Elevation Change" %>
+  </div>
+  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+<% end %>
