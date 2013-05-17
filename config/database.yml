@@ -12,7 +12,7 @@ development:
   database: hikist_dev
   pool: 5
   host: localhost
-  username: mike
+  username: 
   password: future
 
 # Warning: The database defined as "test" will be erased and

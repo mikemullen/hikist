@@ -59,10 +59,27 @@ describe "User Pages" do
 
   describe "profile page" do
   	let(:user) { FactoryGirl.create(:user) }
+    let!(:hike1) do
+      FactoryGirl.create(:hikelog, user: user, content: "My first hike",
+                          title: "First", location: "Tahoe", date_of_hike: '2012-5-24',
+                          length_of_hike: 10, elevation_change: 1200)
+    end
+    let!(:hike2) do
+      FactoryGirl.create(:hikelog, user: user, content: "My second hike",
+                          title: "Second", location: "Shasta", date_of_hike: '2013-5-24',
+                          length_of_hike: 14, elevation_change: 3200)
+    end
+
   	before { visit user_path(user) }
 
   	it { should have_selector('h1',    text: user.name) }
   	it { should have_selector('title', text: user.name) }
+
+    describe "hikelogs" do
+      it { should have_content(hike1.title) }
+      it { should have_content(hike2.title) }
+      it { should have_content(user.hikelogs.count) }
+    end
   end
 
   describe "signup" do

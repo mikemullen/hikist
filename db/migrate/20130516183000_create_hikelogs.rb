@@ -11,6 +11,6 @@ class CreateHikelogs < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :hikelogs, :user_id
+    add_index :hikelogs, [:user_id, :date_of_hike]
   end
 end

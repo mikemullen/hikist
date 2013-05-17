@@ -21,8 +21,8 @@ describe Hikelog do
   let(:user) { FactoryGirl.create(:user) }
   before do
   	@hikelog = user.hikelogs.build(content: "Lorem ispsum", title: "Lorem",
-  							location: "Tahoe", date_of_hike: "2013,5,10",
-  							length_of_hike: "10.5", elevation_change: 1000)
+  							location: "Tahoe", date_of_hike: 2013-5-10,
+  							length_of_hike: 10.5, elevation_change: 1000)
   end
 
   subject { @hikelog }
@@ -51,4 +51,45 @@ describe Hikelog do
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
+
+  describe "with content blank" do
+    before { @hikelog.content = " " }
+    it { should_not be_valid }
+  end
+
+  describe "with content that is too many words" do
+    before { @hikelog.content = "cat " * 1001 }
+    it { should_not be_valid }
+  end
+
+  describe "with title blank" do
+    before { @hikelog.title = " " }
+    it { should_not be_valid }
+  end
+
+  describe "with title too long" do
+    before { @hikelog.title = "a" * 101 }
+    it { should_not be_valid }
+  end
+
+  describe "with location too long" do
+    before { @hikelog.location = "a" * 101 }
+    it { should_not be_valid }
+  end
+
+  describe "with date_of_hike blank" do
+    before { @hikelog.date_of_hike = " " }
+    it { should_not be_valid }
+  end
+
+  describe "with length_of_hike not a number" do
+    before { @hikelog.length_of_hike = "blah" }
+    it { should_not be_valid }
+  end
+
+  describe "with elevation_change not a number" do
+    before { @hikelog.elevation_change = "blah" }
+    it { should_not be_valid }
+  end
+
 end

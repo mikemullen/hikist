@@ -145,7 +145,7 @@ describe User do
   	end
   end
 
-  describe "micropost associations" do
+  describe "hikelog associations" do
 
     before { @user.save }
     let!(:older_hikelog) do

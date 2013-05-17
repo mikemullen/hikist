@@ -18,7 +18,12 @@ class Hikelog < ActiveRecord::Base
   attr_accessible :content, :date_of_hike, :elevation_change,
   				  :length_of_hike, :location, :title
   belongs_to :user
-
-  validates :user_id, presence: true
+  validates :content, :user_id, :title, :date_of_hike, presence: true
+  validates :content, length: { maximum: 1000,
+  			tokenizer: lambda { |str| str.scan(/\w+/) },
+  			too_long: "must have at most %{count} words"
+  }
+  validates :title, :location, length: { maximum: 100 }
+  validates :length_of_hike, :elevation_change, numericality: true
   default_scope order: 'hikelogs.date_of_hike DESC'
 end
