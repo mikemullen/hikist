@@ -3,4 +3,9 @@
   <span class="date">
   	Hiked <%= hikelog.date_of_hike.to_formatted_s(:long_ordinal) %>
   </span>
+  <% if current_user?(hikelog.user) %>
+    <%= link_to "delete", hikelog, method: :delete,
+    							   data: { confirm: "Are you sure?" }, 
+    							   title: hikelog.title %>
+  <% end %>
 </li>

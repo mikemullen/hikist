@@ -25,4 +25,16 @@ describe "Hikelog pages" do
   	#test for valid information
 
   end
+
+  describe "hikelog destruction" do
+    before { FactoryGirl.create(:hikelog, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+
+      it " should delete a hikelog" do
+        expect { click_link "delete" }.to change(Hikelog, :count).by(-1)
+      end
+    end
+  end
 end

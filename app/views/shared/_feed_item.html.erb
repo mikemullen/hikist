@@ -10,4 +10,9 @@
   <span class="length">
   	<%= feed_item.length_of_hike %> Miles
   </span>
+  <% if current_user?(feed_item.user) %>
+    <%= link_to "delete", feed_item, method: :delete,
+                                     data: { confirm: "Are you sure?" },
+                                     title: feed_item.title %>
+  <% end %>
 </li>
