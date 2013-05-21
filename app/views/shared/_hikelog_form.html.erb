@@ -1,22 +1,40 @@
 <%= form_for(@hikelog) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-  	<%= f.text_area :title, placeholder: "Hike title" %>
+  <div class="hikelog_label">
+    Title
+  </div>
+  <div class="field"> 
+  	<%= f.text_field :title, placeholder: "100 characters maximum" %>
+  </div>
+  <div class="hikelog_label">
+    Hikelog report
   </div>
   <div class="field">
-  	<%= f.text_area :content, placeholder: "Enter hike report" %>
+  	<%= f.text_area :content, placeholder: "1,000 words maximum", rows: 10 %>
+  </div>
+  <div class="hikelog_label">
+    Location - optional
   </div>
   <div class="field">
-  	<%= f.text_area :location, placeholder: "Hike location" %>
+  	<%= f.text_field :location, placeholder: "Place, state" %>
+  </div>
+  <div class="hikelog_label">
+    Date of hike - yyyy-mm-dd
   </div>
   <div class="field">
-  	<%= f.text_area :date_of_hike, placeholder: "yyyy-mm-dd" %>
+  	<%= f.text_field :date_of_hike, placeholder: "yyyy-mm-dd" %>
+  </div>
+  <div class="hikelog_label">
+    Length of hike in miles - optional
   </div>
   <div class="field">
-  	<%= f.text_area :length_of_hike, placeholder: "Hike distance in miles" %>
+  	<%= f.text_field :length_of_hike, placeholder: "Miles" %>
+  </div>
+  <div class="hikelog_label">
+    Total Elevation change during hike - optional
   </div>
   <div class="field">
-  	<%= f.text_area :elevation_change, placeholder: "Elevation Change" %>
+  	<%= f.text_field :elevation_change, placeholder: "Feet" %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
 <% end %>
