@@ -1,6 +1,10 @@
 class HikelogsController < ApplicationController
-  before_filter :signed_in_user, only: [:create, :destroy, :show]
+  before_filter :signed_in_user, only: [:create, :destroy, :show, :new]
   before_filter :correct_user,   only: :destroy
+
+  def new
+    @hikelog = current_user.hikelogs.new
+  end
 
   def show
     @hikelog = current_user.hikelogs.find_by_id(params[:id])
@@ -13,7 +17,8 @@ class HikelogsController < ApplicationController
   	  redirect_to root_url
   	else
       @feed_itmes = []
-  	  render 'static_pages/home'
+      render 'hikelogs/new'
+  	  #render 'static_pages/home'
   	end
   end
 

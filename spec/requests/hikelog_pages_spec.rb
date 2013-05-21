@@ -7,8 +7,15 @@ describe "Hikelog pages" do
   let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
 
+  describe "new hikelog page" do
+    before { visit new_hikelog_path }
+
+    it { should have_selector('h1',    text: 'Add hikelog') }
+    it { should have_selector('title', text: 'Add hikelog') }
+  end
+
   describe "hikelog creation" do
-  	before { visit root_path }
+  	before { visit new_hikelog_path }
 
   	describe "with invalid information" do
 
