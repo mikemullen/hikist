@@ -26,6 +26,17 @@ describe "Hikelog pages" do
 
   end
 
+  describe "hikelog show page" do
+    before do
+      FactoryGirl.create(:hikelog, user: user, title: "Tahoe", content: "foobar", id: 1)
+      visit hikelog_path(1)
+    end
+
+    it { should have_selector('title',   text: "Tahoe" ) }
+    it { should have_selector('p', text: "foobar") }
+  end
+
+
   describe "hikelog destruction" do
     before { FactoryGirl.create(:hikelog, user: user) }
 

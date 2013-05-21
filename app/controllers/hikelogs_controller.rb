@@ -1,7 +1,10 @@
 class HikelogsController < ApplicationController
-  before_filter :signed_in_user, only: [:create, :destroy]
+  before_filter :signed_in_user, only: [:create, :destroy, :show]
   before_filter :correct_user,   only: :destroy
 
+  def show
+    @hikelog = current_user.hikelogs.find_by_id(params[:id])
+  end
 
   def create
   	@hikelog = current_user.hikelogs.build(params[:hikelog])

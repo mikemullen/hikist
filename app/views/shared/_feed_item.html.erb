@@ -3,7 +3,8 @@
   <span class="user">
   	<%= link_to feed_item.user.name, feed_item.user %>
   </span>
-  <span class="title"><%= feed_item.title %></span>
+  <span class="title">
+    <%= link_to feed_item.title, feed_item %></span>
   <span class="date">
   	<%= feed_item.date_of_hike.to_formatted_s(:long_ordinal) %>
   </span>

@@ -1,0 +1,13 @@
+<% provide(:title, @hikelog.title) %>
+<div class="row">
+  <div class="span8">
+  	  <h3><%= @hikelog.title %></h3>
+      <p><%= @hikelog.content %></p>
+  	  <ol class="hikestats">
+        <li>Location: <%= @hikelog.location %></li>
+        <li>Date: <%= @hikelog.date_of_hike.to_formatted_s(:long_ordinal) %></li>
+        <li>Distance: <%= @hikelog.length_of_hike %> Miles</li>
+        <li>Elevation: <%= @hikelog.elevation_change %> Feet</li>
+  	  </ol>
+  </div>
+</div>
