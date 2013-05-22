@@ -41,18 +41,51 @@ describe "Hikelog pages" do
 
     it { should have_selector('title',   text: "Tahoe" ) }
     it { should have_selector('p', text: "foobar") }
+
+    describe "hikelog destruction as correct user" do
+
+      it "should delete a hikelog" do
+        expect { click_link "Delete" }.to change(Hikelog, :count).by(-1)
+      end
+    end
   end
 
+  describe "edit" do
+    let(:hikelog) { FactoryGirl.create(:hikelog, user: user, title: "Tahoe", content: "foobar") }
+    before do
+      sign_in user
+      visit edit_hikelog_path(hikelog)
+    end
 
-  describe "hikelog destruction" do
-    before { FactoryGirl.create(:hikelog, user: user) }
+    describe "page" do
+      it { should have_selector('h1',    text: "Update your hikelog") }
+      it { should have_selector('title', text: "Edit hikelog") }
+    end
 
-    describe "as correct user" do
-      before { visit root_path }
-
-      it " should delete a hikelog" do
-        expect { click_link "delete" }.to change(Hikelog, :count).by(-1)
+    describe "with invalid information" do
+      let(:new_length) { "cat" }
+      before do
+        fill_in "Length of hike in miles - optional", with: new_length
+        click_button "Save changes"
       end
+
+      it { should have_content('error') }
+    end
+
+    describe "with valid information" do
+      let(:new_title) { "Shasta" }
+      let(:new_content) { "blahblah" }
+      before do
+        fill_in "Title",   with: new_title
+        fill_in "Hikelog report", with: new_content
+        click_button "Save changes"
+      end
+
+      it { should have_selector('title', text: new_title) }
+      it { should have_selector('div.alert.alert-success') }
+      it { should have_link('Sign out', href: signout_path) }
+      specify { hikelog.reload.title.should  == new_title }
+      specify { hikelog.reload.content.should == new_content }
     end
   end
 end

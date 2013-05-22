@@ -1,6 +1,6 @@
 <% provide(:title, @hikelog.title) %>
 <div class="row">
-  <div class="span8">
+  <div class="span6 offset3">
   	  <h3><%= @hikelog.title %></h3>
       <p><%= @hikelog.content %></p>
   	  <ol class="hikestats">
@@ -9,5 +9,15 @@
         <li>Distance: <%= @hikelog.length_of_hike %> Miles</li>
         <li>Elevation: <%= @hikelog.elevation_change %> Feet</li>
   	  </ol>
+      <% if current_user?(@hikelog.user) %>
+      <%= link_to "Delete", @hikelog, method: :delete,
+                                     data: { confirm: "Are you sure?" },
+                                     title: @hikelog.title,
+                                     class: "btn btn-large btn-primary" %>
+      <%= link_to "Update hikelog", edit_hikelog_path,
+                                     class: "btn btn-large btn-primary" %>
+  <% end %>
+
+
   </div>
 </div>

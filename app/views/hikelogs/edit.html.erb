@@ -1,0 +1,32 @@
+<% provide(:title, 'Edit hikelog') %>
+<h1>Update your hikelog</h1>
+<div class="row">
+  <div class="span6 offset3">
+  <section>
+<%= form_for(@hikelog) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  
+  	<%= f.label :title %>
+  	<%= f.text_field :title, placeholder: "100 characters maximum" %>
+
+  	<%= f.label :content, "Hikelog report" %>
+  	<%= f.text_area :content, placeholder: "1,000 words maximum", rows: 10 %>
+  
+  	<%= f.label :location, "Location - optional" %>
+  	<%= f.text_field :location, placeholder: "Place, state" %>
+
+  	<%= f.label :date_of_hike, "Date of hike - yyyy-mm-dd" %>
+  	<%= f.text_field :date_of_hike, placeholder: "yyyy-mm-dd" %>
+
+  	<%= f.label :length_of_hike, "Length of hike in miles - optional" %>
+  	<%= f.text_field :length_of_hike, placeholder: "Miles" %>
+  
+  	<%= f.label :elevation_change, "Total Elevation change during hike - optional" %>
+  	<%= f.text_field :elevation_change, placeholder: "Feet" %>
+
+  <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+<% end %>
+
+  </section>
+  </div>
+</div>

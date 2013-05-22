@@ -1,7 +1,7 @@
 Hikist::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :hikelogs, only: [:create, :destroy, :show, :new]
+  resources :hikelogs, only: [:create, :destroy, :show, :new, :edit, :update]
 
   root to: 'static_pages#home'
   

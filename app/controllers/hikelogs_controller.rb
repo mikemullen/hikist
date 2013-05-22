@@ -1,13 +1,25 @@
 class HikelogsController < ApplicationController
-  before_filter :signed_in_user, only: [:create, :destroy, :show, :new]
-  before_filter :correct_user,   only: :destroy
+  before_filter :signed_in_user, only: [:create, :destroy, :new, :edit, :update]
+  before_filter :correct_user,   only: [:destroy, :edit, :update]
 
   def new
     @hikelog = current_user.hikelogs.new
   end
 
+  def edit
+  end
+
+  def update
+    if @hikelog.update_attributes(params[:hikelog])
+      flash[:success] = "Hikelog updated"
+      redirect_to @hikelog
+    else
+      render 'edit'
+    end
+  end
+
   def show
-    @hikelog = current_user.hikelogs.find_by_id(params[:id])
+    @hikelog = Hikelog.find_by_id(params[:id])
   end
 
   def create
