@@ -1,5 +1,5 @@
 <li>
-  <span class="title"><%= hikelog.title %></span>
+  <span class="title"><%= link_to hikelog.title, hikelog %></span>
   <span class="date">
   	Hiked <%= hikelog.date_of_hike.to_formatted_s(:long_ordinal) %>
   </span>
