@@ -2,7 +2,7 @@
 <div class="row">
   <div class="span6 offset3">
   	  <h3><%= @hikelog.title %></h3>
-      <p><%= @hikelog.content %></p>
+      <p class="main_hikelog"><%= @hikelog.content %></p>
   	  <ol class="hikestats">
         <li>Location: <%= @hikelog.location %></li>
         <li>Date: <%= @hikelog.date_of_hike.to_formatted_s(:long_ordinal) %></li>
@@ -10,14 +10,16 @@
         <li>Elevation: <%= @hikelog.elevation_change %> Feet</li>
   	  </ol>
       <% if current_user?(@hikelog.user) %>
+      <div class="edit_buttons">
       <%= link_to "Delete", @hikelog, method: :delete,
                                      data: { confirm: "Are you sure?" },
                                      title: @hikelog.title,
                                      class: "btn btn-large btn-primary" %>
+      </div>
+      <div class="edit_buttons">
       <%= link_to "Update hikelog", edit_hikelog_path,
                                      class: "btn btn-large btn-primary" %>
-  <% end %>
-
-
+      <% end %>
+      </div>
   </div>
 </div>

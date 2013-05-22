@@ -18,6 +18,9 @@ html {
 
 body {
   padding-top: 70px;
+/*  background: url('/background.jpg') no-repeat center center;
+  min-height: 100%;
+  background-size: cover; */
 }
 
 section {
@@ -220,8 +223,20 @@ aside {
 .hikestats {
   list-style: none;
   margin: 10px 0 0 0;
+  border-bottom: 1px solid gray;
+  margin: 0 0 15px 0;
 }
 
 .hikelog_label {
   margin: 0 0 5px 0;
+}
+
+.main_hikelog {
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+.edit_buttons {
+  display: inline;
+  margin: 0 15px 0 0;
 }
