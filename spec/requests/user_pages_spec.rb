@@ -74,6 +74,7 @@ describe "User Pages" do
 
   	it { should have_selector('h1',    text: user.name) }
   	it { should have_selector('title', text: user.name) }
+    it { should have_selector('h2', text: "Hiker Stats") }
 
     describe "hikelogs" do
       it { should have_content(hike1.title) }

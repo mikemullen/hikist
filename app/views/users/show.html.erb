@@ -7,6 +7,11 @@
   		<%= @user.name %>
 	  </h1>
   	</section>
+    <section>
+      <% if @user.hikelogs.any? %>
+      <%= render 'shared/stats' %>
+      <% end %>
+    </section>
   </aside>
   <div class="span8">
   	<% if @user.hikelogs.any? %>

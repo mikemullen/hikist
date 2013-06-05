@@ -1,0 +1,4 @@
+
+  <h3> Hiker Stats </h3>
+    Hikist Miles: <%= @user.hikelogs.sum("length_of_hike") %> <br>
+    Hikist Elevation Change: <%= @user.hikelogs.sum("elevation_change") %>
