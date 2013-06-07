@@ -26,4 +26,11 @@ class Hikelog < ActiveRecord::Base
   validates :title, :location, length: { maximum: 100 }
   validates :length_of_hike, :elevation_change, numericality: true
   default_scope order: 'hikelogs.date_of_hike DESC'
+
+  def self.from_users_followed_by(user)
+    leader_ids = "SELECT leader_id FROM relationships
+                 WHERE follower_id = :user_id"
+    where("user_id IN (#{leader_ids}) OR user_id = :user_id",
+          user_id: user)
+  end
 end

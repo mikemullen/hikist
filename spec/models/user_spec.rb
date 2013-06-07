@@ -33,6 +33,12 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:hikelogs) }
   it { should respond_to(:feed) }
+  it { should respond_to(:relationships) }
+  it { should respond_to(:leaders) }
+  it { should respond_to(:reverse_relationships) }
+  it { should respond_to(:followers) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:follow!) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -173,10 +179,47 @@ describe User do
       let(:unfollowed_hike) do
         FactoryGirl.create(:hikelog, user: FactoryGirl.create(:user))
       end
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.hikelogs.create!(content: "Lorem ispsum",
+                title: "Lorem",
+                location: "Tahoe", date_of_hike: "2010-05-10",
+                length_of_hike: 10.5, elevation_change: 1000) }
+      end
 
       its(:feed) { should include(newer_hikelog) }
       its(:feed) { should include(older_hikelog) }
       its(:feed) { should_not include(unfollowed_hike) }
+      its(:feed) do
+        followed_user.hikelogs.each do |hikelog|
+          should include(hikelog)
+        end
+      end
+    end
+  end
+
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:leaders) { should include(other_user) }
+
+    describe "leader" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
+    end
+
+    describe "and unfollowing" do
+      before { @user.unfollow!(other_user) }
+
+      it { should_not be_following(other_user) }
+      its(:leaders) { should_not include(other_user) }
     end
   end
 end

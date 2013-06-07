@@ -12,8 +12,12 @@
       <%= render 'shared/stats' %>
       <% end %>
     </section>
+    <section>
+      <%= render 'shared/followstats' %>
+    </section>
   </aside>
   <div class="span8">
+    <%= render 'follow_form' if signed_in? %>
   	<% if @user.hikelogs.any? %>
   	  <h3>Hikes (<%= @user.hikelogs.count %>)</h3>
   	  <ol class="hikelogs">
