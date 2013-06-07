@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :admin_user,     only: :destroy
 
   def following
-    @title = "Following"
+    @title = "Trailing"
     @user = User.find(params[:id])
     @users = @user.leaders.paginate(page: params[:page])
     render 'show_follow'
