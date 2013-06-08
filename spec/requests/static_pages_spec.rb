@@ -40,7 +40,7 @@ describe "Static Pages" do
         end
 
         it { should have_link("Trailing 0 Hikists", href: following_user_path(user)) }
-        it { should have_link("Leading 1 Hikists", href: leading_user_path(user)) }
+        it { should have_link("Leading 1 Hikist", href: leading_user_path(user)) }
       end
     end
   end
