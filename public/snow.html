@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      #layer_selector {
+        position: absolute;
+        top: 80px;
+        right: 20px;
+        padding: 0;
+      }
+      #layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+      #layer_selector li {
+        border-bottom: 1px solid #999999;
+        padding: 15px 30px;
+        font-family: "Helvetica",Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+      }
+      .caption {
+        font-family: "Helvetica",Arial;
+        font-size: 12px;
+        color: #225386;
+        line-height: .8em;
+        background-color: white;
+        padding: 5px 10px 5px 10px;
+      }
+      #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+      }
+      #layer_selector li.selected {
+        background-color: #EEE;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
+    <![endif]-->
+
+  </head>
+    
+  <body>
+    <div id="map"></div>
+    <div id="layer_selector" class="cartodb_infobox">
+    <div class="caption">
+      <p><b>Enter date for snow in inches.</b></p>
+      <p>First: 2011-10-01</p>
+      <p>Last: 2013-06-13</p>
+      <p>Format: yyyy-mm-dd</p>
+    
+      <input type="date" name="searchdate" id="searchdate" value="2013-01-01" />
+      <input type="button" value="Submit" id="submit_date" onclick="dateSelector()" />
+    </div>
+    </div>
+  </body>
+  </body>
+
+  <!-- include cartodb.js library -->
+  <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+
+  <script>
+
+
+     // create layer selector
+    function createSelector(layer) {
+      var sql = new cartodb.SQL({ user: 'mikemullen' });
+
+      var $options = $('#submit_date');
+      $options.click(function() {
+
+        var area = $('#searchdate').val();
+
+        var query = "SELECT * from sierrasnowtracker WHERE CAST(dt AS DATE) = '"+area+"' ";
+
+        // change the query in the layer to update the map
+        layer.setQuery(query);
+      });
+    }
+
+
+
+    function main() {
+      cartodb.createVis('map', 'http://mikemullen.cartodb.com/api/v1/viz/sierrasnowtracker/viz.json', {
+          shareable: true,
+          title: true,
+          description: true,
+          searchControl: false,
+          tiles_loader: true,
+          center_lat: 39,
+          center_lon: -120,
+          zoom: 9,
+          sql: "SELECT * from sierrasnowtracker WHERE CAST(dt AS DATE) = '2013-01-01' "
+      })
+      .done(function(vis, layers) {
+        // layer 0 is the base layer, layer 1 is cartodb layer
+        createSelector(layers[1]);
+        })
+      .error(function(err) {
+        console.log(err);
+      });
+
+
+    }
+
+    window.onload = main;
+
+  </script>
+
+
+</html>
